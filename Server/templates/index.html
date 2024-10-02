@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            margin: 20px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #45a049;
+        }
+
+        section {
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s;
+            display: none; /* Hide all sections initially */
+        }
+
+        section.active {
+            display: block; /* Show only active section */
+            border: 2px solid #4CAF50; /* Highlight active section */
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            width: 300px;
+            margin: 10px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .services {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            text-align: center;
+            width: 30%;
+            margin: 10px 0;
+        }
+
+        .service img {
+            width: 200px; /* Set the width to 200px */
+            height: 200px; /* Set the height to 200px */
+            border-radius: 5px;
+        }
+
+        .announcement-list {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .announcement {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .announcement:last-child {
+            border-bottom: none; /* Remove last border */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Volunteer Platform</h1>
+    <nav>
+        <a href="#" onclick="showSection('services')">Services</a>
+        <a href="#" onclick="showSection('postAnnouncement')">Post an Announcement</a>
+        <a href="#" onclick="showSection('viewAnnouncements')">View Announcements</a>
+        <a href="#" onclick="showSection('volunteer')">Become a Volunteer</a>
+        <a href="#" onclick="showSection('contact')">Contact Us</a>
+    </nav>
+</header>
+
+<section id="services" class="active">
+    <h2>Our Services</h2>
+    <div class="services">
+        <div class="service">
+            <img src="https://images.pexels.com/photos/7551644/pexels-photo-7551644.jpeg" alt="Senior Support"> 
+            <h3>Senior Support</h3>
+            <p>Support seniors with daily activities and companionship.</p>
+        </div>
+        <div class="service">
+            <img src="https://images.pexels.com/photos/7656743/pexels-photo-7656743.jpeg" alt="Community Clean-Up"> 
+            <h3>Community Clean-Up</h3>
+            <p>Join us in cleaning and beautifying our neighborhoods.</p>
+        </div>
+        <div class="service">
+            <img src="https://images.pexels.com/photos/8055488/pexels-photo-8055488.jpeg" alt="Tutoring"> 
+            <h3>Tutoring</h3>
+            <p>Help students with their studies and academic challenges.</p>
+        </div>
+    </div>
+</section>
+
+<section id="postAnnouncement">
+    <h2>Post an Announcement</h2>
+    <div class="form-container">
+        <form id="announcementForm">
+            <input type="text" id="announcementTitle" placeholder="Title" required>
+            <textarea id="announcementDetails" placeholder="Details" required></textarea>
+            <input type="text" id="announcementPhone" placeholder="Your Phone Number" required>
+            <button type="submit">Post Announcement</button>
+        </form>
+    </div>
+</section>
+
+<section id="viewAnnouncements">
+    <h2>Posted Announcements</h2>
+    <div class="announcement-list" id="announcementList"></div>
+</section>
+
+<section id="volunteer">
+    <h2>Become a Volunteer</h2>
+    <p>Thank you for your interest in becoming a volunteer! Together, we can make a difference in our community.</p>
+</section>
+
+<section id="contact">
+    <h2>Contact Us</h2>
+    <div class="form-container">
+        <form id="contactForm">
+            <input type="text" id="contactName" placeholder="Your Name" required>
+            <input type="email" id="contactEmail" placeholder="Your Email" required>
+            <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Volunteer Platform. All rights reserved.</p>
+</footer>
+
+<script>
+    const announcements = JSON.parse(localStorage.getItem('announcements')) || []; // Load announcements from localStorage
+
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    document.getElementById('announcementForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const title = document.getElementById('announcementTitle').value;
+        const details = document.getElementById('announcementDetails').value;
+        const phone = document.getElementById('announcementPhone').value;
+
+        // Create an announcement object
+        const announcement = {
+            title: title,
+            details: details,
+            phone: phone
+        };
+
+        // Add announcement to the array
+        announcements.push(announcement);
+
+        // Save announcements to localStorage
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+
+        // Clear form fields
+        document.getElementById('announcementForm').reset();
+
+        // Update the displayed announcements
+        displayAnnouncements();
+    });
+
+    function displayAnnouncements() {
+        const announcementList = document.getElementById('announcementList');
+        announcementList.innerHTML = ''; // Clear existing announcements
+
+        // Loop through announcements and display them
+        announcements.forEach(announcement => {
+            const announcementDiv = document.createElement('div');
+            announcementDiv.className = 'announcement';
+            announcementDiv.innerHTML = `<strong>${announcement.title}</strong><br>${announcement.details}<br>Contact: ${announcement.phone}`;
+            announcementList.appendChild(announcementDiv);
+        });
+    }
+
+    // Call displayAnnouncements on page load to show existing announcements
+    window.onload = displayAnnouncements;
+
+    // Handle contact form submission
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+
+        // For now, just alert the user that the message was sent
+        alert(`Thank you for your message, ${name}! We will get back to you shortly.`);
+
+        // Clear form fields
+        document.getElementById('contactForm').reset();
+    });
+
+</script>
+
+</body>
+</html>
